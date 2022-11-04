@@ -1,4 +1,5 @@
 #include "my_buffer.h"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
 
 char* GetSrcFile (const char *file_direction)
     {
@@ -20,7 +21,7 @@ char* GetSrcFile (const char *file_direction)
     char* txt_buffer = (char*) calloc (txt_data.st_size + 1, sizeof (char));
     if (!txt_buffer)
         return NULL;
-        
+  
     size_t number_of_ch = fread (txt_buffer, sizeof(char), txt_data.st_size, txt);
 
     char* temp = (char*)realloc(txt_buffer, number_of_ch + 1);

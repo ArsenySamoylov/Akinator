@@ -3,13 +3,18 @@
 
 #pragma GCC diagnostic ignored "-Wformat="
 
-#define $i(int_var)     {printf("\t%s: %d\n", #int_var, int_var);          }
-#define $c(char_var)    {printf("\t%s: %c\n", #char_var, char_var);        }
-#define $d(double_var)  {printf("\t%s: %lg\n", #double_var, double_var);   }
-#define $s(string)      {printf("\t%s: %.60s\n", #string, string);         }
+#define $i(int_var)     do {printf("\t%s: %d\n", #int_var, int_var);        } while(0);  
+#define $c(char_var)    do {printf("\t%s: %c\n", #char_var, char_var);      } while(0);  
+#define $d(double_var)  do {printf("\t%s: %lg\n", #double_var, double_var); } while(0);  
+#define $s(string)      do {printf("\t%s: %.60s\n", #string, string);       } while(0);
 #pragma GCC diagnostic ignored "-Wcast-qual"
-#define $p(pointer)     {printf("\t%s: %p\n", #pointer, (void*)pointer);   }
+#define $p(pointer)     do {printf("\t%s: %p\n", #pointer, (void*)pointer); } while(0);
 
+#define assert(condition)   do                        \
+                            {                         \
+                            if (!(condition))           \
+                                printf ("%s: Dyrachok, (%s) - is wrong condition (in line %d)\n", __func__, #condition, __LINE__); \
+                            } while(0);
 
 #define $                                                                                       \
     do                                                                                          \

@@ -1,4 +1,4 @@
-#include "my_log.h"
+#include "stdlog.h"
 
 static FILE* my_log = NULL; 
 

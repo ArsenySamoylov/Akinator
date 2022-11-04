@@ -1,36 +1,81 @@
-CC := g++ 
-STDNAME := SPrYtny
+CC   := g++
+NAME := GGGG
+ARGS := 
 
-CFLAGS  := -Wall -Wextra -Wpedantic                   -Wshadow           -Winit-self            -Wredundant-decls      -Wcast-align         \
-           -Wfloat-equal -Winline                     -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wundef              \
-		   -Wswitch-enum -Wswitch-default             -Weffc++           -Wmain                 -Wextra                -Wcast-qual          \
-		   -Wconversion  -Wctor-dtor-privacy          -Wempty-body       -Wformat-security      -Wformat=2             -Wignored-qualifiers \
-		   -Wlogical-op  -Wmissing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual   -Wpointer-arith                             \
-		   -Wsign-promo  -Wstack-usage=8192           -Wstrict-aliasing  -Wstrict-null-sentinel -Wtype-limits          -Wwrite-strings      \
-		   -D_DEBUG      -D_EJUDGE_CLIENT_SIDE        -Wall              -g                     -pipe                  -fexceptions
+LOGFILE := compileLog
 
+CFLAGS  := -g   -D _DEBUG  -std=c++20 		-Wall  -Wc++14-compat  				-Wextra  				-Wcast-qual    				-Wcast-align   					   \
+				-Weffc++   -Wfloat-equal 	-Wchar-subscripts  					-Wconversion   			-Woverloaded-virtual   		-Wstack-protector				   \
+				-Wformat-nonliteral    		-Wempty-body     					-Wformat-security       -Wformat=2	   				-Wformat-signedness	   			   \
+			    -Wlogical-op           		-Wopenmp-simd    					-Wnon-virtual-dtor 	    -Winline	   				-Wconditionally-supported          \
+				-Wpacked   -Wpointer-arith  -Winit-self       	 				-Wredundant-decls       -Wshadow 					-Wmissing-declarations 			   \
+				-Wsign-conversion      		-Wsign-promo     					-Wstrict-null-sentinel  -Wstrict-overflow=2			-Wsuggest-attribute=noreturn  	   \
+				-Wsuggest-final-methods     -Wsuggest-final-types 				-Wundef 				-Wctor-dtor-privacy 		-Waggressive-loop-optimizations    \
+				-Wsuggest-override     		-Wswitch-default 					-Wswitch-enum           -Wsync-nand    				-flto-odr-type-merging 			   \
+				-Wunreachable-code     		-Wunused         					-Wuseless-cast 		    -Wvariadic-macros 			-fstrict-overflow 				   \
+				-Wno-literal-suffix    		-Wno-missing-field-initializers		-Wno-narrowing 			-Wno-old-style-cast 		-fstack-protector				   \
+				-Wno-varargs           		-fcheck-new     					-fsized-deallocation    -fno-omit-frame-pointer 	-Wpedantic 						   \
+				-Wlarger-than=8192     		-Wstack-usage=8192 					-pie -fPIE 				
+							   		 					
 
-SRCDIR := src ATC/Log/ ATC/Buffer/ ATC/Additional/
-SRC    := $(wildcard $(addsuffix /*.cpp, $(SRCDIR)) )
+SANITIZERS := #-fsanitize=address,leak #,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
+LFLAGS 	   := -lpthread 
+			 #-lsfml-window -lsfml-system -lsfml-graphics -lncurses -lsfml-audio #-lasan
 
-INCDIR   := headers ATC/Log/ ATC/Buffer/ ATC/Additional/
-INCLUDES := $(addprefix -I, $(INCDIR)) 
+SRCDIR := src     ./ATC/Additional ./ATC/Buffer ./ATC/Log 
+INCDIR := headers ./ATC/Additional ./ATC/Buffer ./ATC/Log 
 
 OBJDIR := build
-OBJ    := $(patsubst %.cpp, $(OBJDIR)/%.o, $(notdir $(SRC)) )
+DEPDIR := dependences
 
-ARGV   := 
+SOURCES     := $(wildcard $(addsuffix /*.cpp, $(if $(SRCDIR), $(SRCDIR), .)) )
 
-VPATH  := $(SRCDIR)
+OBJECTS     := $(patsubst %.cpp, $(if $(OBJDIR), $(OBJDIR)/%.o, ./%.o), $(notdir $(SOURCES)) )
+DEPENDENCES := $(patsubst %.cpp, $(if $(DEPDIR), $(DEPDIR)/%.d, ./%.d), $(notdir $(SOURCES)) )
 
-$(STDNAME): $(OBJ)
-	@$(CC) $(OBJ) -o $@
+VPATH := $(SRCDIR)
 
-$(OBJDIR)/%.o: %.cpp
-	@$(CC) -c $(INCLUDES) $(CFLAGS) $< -o $@ 
+.PHONY: clean cleanLog run  dependences cleanDependences makeDependencesDir objects check openLog
 
-run: clean $(STDNAME)
-	@./$(STDNAME) $(ARGV)
+$(NAME):  dependences objects $(OBJECTS) cleanDependences
+	@$(if $(OBJECTS), $(CC) $(OBJECTS) $(LFLAGS) -o $@ #2>>$(LOGFILE))
 
+############################################################################
 clean:
-	@rm -rf $(OBJ) $(STDNAME)
+	@rm -rf $(OBJECTS) $(DEPENDENCES) $(DEPDIR) $(NAME)
+
+cleanLog:
+	@rm -rd .Logs/
+
+openLog:
+	@xdg-open $(shell ls .Logs/*.html -t | head -1)
+
+############################################################################
+check: clean $(NAME)
+	@$(if $(NAME), valgrind --leak-check=full \
+         --show-leak-kinds=all                \
+         ./$(NAME) $(ARGS))
+
+run: clean $(NAME)
+	@$(if $(NAME), ./$(NAME) $(ARGS))
+
+#############################################################################
+dependences: makeDependencesDir $(DEPENDENCES)
+
+makeDependencesDir:
+	@$(if $(DEPDIR), mkdir -p $(DEPDIR))
+
+$(if $(DEPDIR), $(DEPDIR)/%.d, %.d): %.cpp
+	@$(CC) -M $(addprefix -I, $(INCDIR)) $< -o $@
+
+cleanDependences:
+	@rm -rf $(DEPENDENCES) $(DEPDIR)
+
+##############################################################################
+objects:
+	@$(if $(OBJDIR), mkdir -p $(OBJDIR))
+
+$(if $(OBJDIR), $(OBJDIR)/%.o, %.o): %.cpp
+	@$(CC) -c $(addprefix -I, $(INCDIR)) -save-temps $(CFLAGS) $(SANITIZERS) $< -o $@ #2>>$(LOGFILE)
+
+include $(wildcard $(DEPDIR)/*.d)

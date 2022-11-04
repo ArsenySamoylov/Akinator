@@ -15,25 +15,27 @@ static const char* COMMON_ERROR_MESSAGES[] =
                   };
 
 #pragma GCC diagnostic ignored "-Wunused-value"
-//! @note Use this macros with return val (for example: CHECK_PTR_RET(ptr, return NULL_PTR)) 
-// 
-// #define CHECK_PTR_STDERR(ptr, return_value)                                   \
-//                                                 {                      \
-//                                                 if(!ptr)               \
-//                                                   {                    \
-//                                                   printf("%s common error: %s\n", __func__, COMMON_ERROR_MESSAGES[return_value]); \
-//                                                   return return_value; \
-//                                                   }                    \
-//                                                 }
+/*! @note Use this macros with return val (for example: CHECK_PTR_RET(ptr, return NULL_PTR)) 
 
-// #define CHECK_PTR_MSG(ptr, return_expression, ...)                     \
-//                                                {                       \
-//                                                 if(!ptr)               \
-//                                                   {                    \
-//                                                   printf(__VA_ARGS__); \
-//                                                   return_expression;   \
-//                                                   }                    \
-//                                                }
+#define CHECK_PTR_STDERR(ptr, return_value)                                   \
+                                                {                      \
+                                                if(!ptr)               \
+                                                  {                    \
+                                                  printf("%s common error: %s\n", __func__, COMMON_ERROR_MESSAGES[return_value]); \
+                                                  return return_value; \
+                                                  }                    \
+                                                }
+*/
+
+/* #define CHECK_PTR_MSG(ptr, return_expression, ...)                     \
+                                               {                       \
+                                                if(!ptr)               \
+                                                  {                    \
+                                                  printf(__VA_ARGS__); \
+                                                  return_expression;   \
+                                                  }                    \
+                                              }
+*/
 
 #define CHECK_PTRS(return_expression, ...)     {                                                          \
                                       const void* __arszsr[] = {__VA_ARGS__};                             \
@@ -63,10 +65,9 @@ static const char* COMMON_ERROR_MESSAGES[] =
                                           {                                     \
                                           if(!ptr)                              \
                                             {                                   \
-                                            const char message [MAX_MESSAGE_LENGTH + 16]  = {}; \
-                                            snprintf  (message,   MAX_MESSAGE_LENGTH, "%s error: %s - NULL ptr (in line %d)", __func__, __LINE__, #ptr ); \
-                                            perror    (message);                \
+                                            char      message [MAX_MESSAGE_LENGTH + 16]  = {}; \
+                                            snprintf (message, MAX_MESSAGE_LENGTH, "%s error: %s - NULL ptr (in line %d)", __func__, #ptr, __LINE__); \
+                                            perror   (message);                \
                                             return_expression;                  \
                                             }                                   \
                                           }                                                   
-#endif

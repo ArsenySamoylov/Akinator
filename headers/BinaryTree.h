@@ -1,18 +1,37 @@
 #pragma once
 
-typedef int elemen_t;
+#include "CommonEnums.h"
+#include "QDiagnostic.h"
+#include "Utils.h"
+#include "EasyDebug.h"
+
+#include <malloc.h>
+
+namespace tree {
+
+typedef char elemen_t;
+const int DATA_SIZE = 256;
 
 struct Node
     {
-    Node*    next;
-    elemen_t data;
-    Node*    prev;
+    Node*    parent;
+    elemen_t data[DATA_SIZE] = {};
+
+    Node*  first_child;
+    Node* second_child;
     };
 
-struct Tree
+struct BinaryTree
     {
-    Node* nodes_arr;
+    Node* root;
 
     int size;
-    status = UNITIALIZED;
-    }
+    int status = UNITIALIZED;
+    };
+
+int Ctor (BinaryTree* tree);
+int Dtor (BinaryTree* tree);
+
+int Add (Node* node);
+
+} 
