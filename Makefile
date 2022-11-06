@@ -22,8 +22,8 @@ SANITIZERS := #-fsanitize=address,leak #,alignment,bool,bounds,enum,float-cast-o
 LFLAGS 	   := -lpthread 
 			 #-lsfml-window -lsfml-system -lsfml-graphics -lncurses -lsfml-audio #-lasan
 
-SRCDIR := src     ./ATC/Additional ./ATC/Buffer ./ATC/Log 
-INCDIR := headers ./ATC/Additional ./ATC/Buffer ./ATC/Log 
+SRCDIR := src     ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
+INCDIR := headers ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
 
 OBJDIR := build
 DEPDIR := dependences
@@ -42,13 +42,13 @@ $(NAME):  dependences objects $(OBJECTS) cleanDependences
 
 ############################################################################
 clean:
-	@rm -rf $(OBJECTS) $(DEPENDENCES) $(DEPDIR) $(NAME)
+	@rm -rf $(OBJECTS) $(DEPENDENCES) $(DEPDIR) $(NAME) build/*.ii build/*.s #$(shell ls build/*.ii -t | head -1) $(shell ls build/*.s -t | head -1)
 
 cleanLog:
-	@rm -rd .Logs/
+	@rm -rd Logs/
 
 openLog:
-	@xdg-open $(shell ls .Logs/*.html -t | head -1)
+	@xdg-open $(shell ls Logs/*.html -t | head -1)
 
 ############################################################################
 check: clean $(NAME)

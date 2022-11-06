@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdarg.h>
 
 
@@ -16,7 +17,7 @@ const int SYSTEM_COMMAND_LENGTH = 155;
 
 // mb ask programmer to write his own functions to include it here ????
 
-const char* GetImage (ArsList* list);
+const char* GetImage ();
 void SetDot          ();
 
 void SetEndDot       ();

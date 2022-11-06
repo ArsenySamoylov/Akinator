@@ -5,20 +5,16 @@ namespace data{
 
 int SetDataBase (DataBase* data_base, const char* path)
     {
-    CHECK_STDERR(data_base, return NULL_PTR);
-    CHECK_STDERR(path,      return NULL_PTR);  // MB in this case open new data base ??? 
+    assertlog (data_base, EFAULT, exit(FAILURE));
+    assertlog (path,      ENOENT, exit(FAILURE)); // MB in this case open new data base ??? 
 
     const char* buffer = GetSrcFile(path);
-    if (!buffer)
-        {
-        printf ("Can't find data base in path: %s\n", path);
-        printf ("TO do: in this case create std empty data base\n");
+    assertlog (buffer, ENOENT, \
+          return  MsgRet (FAILURE, "Can't find data base in path: %s\n", path)); //  MsgNoRet ("TO do: in this case create std empty data base\n") \
 
-        return FAILURE;
-        }
 
     DataTree* data_tree = (BinaryTree*) calloc (1, sizeof(data_tree[0]));
-    CHECK_STDERR(data_tree, return BAD_CALLOC);
+    assertlog (data_tree, ENOMEM, return FAILURE);
 
     Ctor(data_tree);
 
@@ -39,7 +35,7 @@ int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
 
     // check that data_tree is empty
     if (data_tree->size)
-        return MessageReturn (FAILURE, "DataTree must be empty\n");
+        return MsgRet (FAILURE, "DataTree must be empty\n");
 
     // setting everything to start parsing
     buffer = SkipSpaces(buffer);
@@ -123,8 +119,10 @@ int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
     // setting everything after parsing
 
     // check that current_node is root
+    $p(current_node)
+    $$
     if (!current_node->parent)
-        return MessageReturn (FAILURE, "Erro occurred, current_node must have NULL parent\n");
+        return MsgRet (FAILURE, "Erro occurred, current_node must have NULL parent\n");
 
     data_tree->root = current_node;
     data_tree->size = number_of_nodes;

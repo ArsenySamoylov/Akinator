@@ -1,6 +1,6 @@
 #pragma once
 
-#include "my_log.h"
+#include "stdlog.h"
 #include "my_buffer.h"
 
 #include "DataBase.h"

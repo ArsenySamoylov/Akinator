@@ -30,11 +30,11 @@ int Dtor (BinaryTree* tree)
     CHECK_STDERR(tree, return NULL_PTR);
 
     if (tree->status != ACTIVE)
-        return MessageReturn(FAILURE, "Ebat, deleting, not active mode\n");
+        return MsgRet(FAILURE, "Ebat, deleting, not active mode\n");
     
     int status = DeleteBranch(tree->root);
     if (status != SUCCESS)
-        return MessageReturn(FAILURE, "Ebat, error deleting main branch\n");
+        return MsgRet(FAILURE, "Ebat, error deleting main branch\n");
 
     tree->root   = NULL;
     tree->size   = 0;
@@ -48,9 +48,9 @@ int Add (Node* node)
     CHECK_STDERR(node, return NULL_PTR);
 
     if (node->first_child)
-        return MessageReturn(FAILURE, "Node already has first child\n");
+        return MsgRet(FAILURE, "Node already has first child\n");
     if (node->second_child)
-        return MessageReturn(FAILURE, "Node already has second child\n");
+        return MsgRet(FAILURE, "Node already has second child\n");
 
     Node* first_child  = (Node*) calloc (1, sizeof(Node));
     CHECK_STDERR(first_child,  return BAD_CALLOC);
@@ -88,11 +88,11 @@ static int  DeleteBranch (Node* root)
 
     int status  = DeleteBranch (root->first_child);
     if (status != SUCCESS)
-        return MessageReturn (FAILURE, "Could't delete first_child branch\n");
+        return MsgRet (FAILURE, "Could't delete first_child branch\n");
 
         status  = DeleteBranch (root->second_child);
     if (status != SUCCESS)
-        return MessageReturn (FAILURE, "Could't delete second_child branch\n");
+        return MsgRet (FAILURE, "Could't delete second_child branch\n");
 
     return SUCCESS;
     }

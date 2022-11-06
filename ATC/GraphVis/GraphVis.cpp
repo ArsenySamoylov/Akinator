@@ -4,20 +4,16 @@ static FILE* Dot = NULL;
 
 
    
-void VisualDump (ArsList* list)
-    {   
-    if (!list) { hlog("Ebat, null ptr\n"); return;}
+// void VisualDump ()
+//     {   
+//     const char* graph = GetImage(list);
+//     AddGraphToHlog(graph);
 
-    const char* graph = GetImage(list);
-    AddGraphToHlog(graph);
+//     return;
+//     }
 
-    return;
-    }
-
-const char* GetImage (ArsList* list)
+const char* GetImage ()
     {
-    if (!list)  return NULL;
-
     static int num_of_img = 0;
 
     char      dot_file [MAX_GRAPH_NAME_LENGTH + 16] = {};
@@ -38,7 +34,7 @@ const char* GetImage (ArsList* list)
    
     char      system_command [SYSTEM_COMMAND_LENGTH + 16] = {};
     snprintf (system_command, SYSTEM_COMMAND_LENGTH, "dot -T png -o %s %s", image_name, dot_file);
-    $s(system_command)
+    //$s(system_command)
 
     system   (system_command);
     
@@ -97,6 +93,7 @@ void CloseDot ()
     return; 
     }
 
+
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // void SetNodesArr (ArsList* list)
 //     {
@@ -115,7 +112,7 @@ void CloseDot ()
 //     /////////////////////////////////////////////////////////////////node array
 //     //*********************** nodes initialization
 //     // zero node
-//     DotPrint( "\t\tzero_node  [shape = Mrecord label = \"Zero node | {<head> head %d} | {data %0X} | {<tail> tail %d}\"]\n\n", \
+//     DotPrint( "\t\tzero_node  [shape = Mrecord label = \"Zero node | {<head> head %d} | {data %0X} | {<tail> tail %d}\"]\n\n", 
 //                  node_arr->next, node_arr->data, node_arr->prev);
 
 //     for (index_t i = 1; i < capacity + 1; i++)  
@@ -145,8 +142,8 @@ void CloseDot ()
 
 //     set_func_name;
 
-//     DotPrint("\tLIST [shape = Mrecord label = \"List status:  | \\\n" \
-//              "\t\t{Capacity %d} | {Active nodes %d} | {%s}\"]",      \
+//     DotPrint("\tLIST [shape = Mrecord label = \"List status:  | \\\n" 
+//              "\t\t{Capacity %d} | {Active nodes %d} | {%s}\"]",      
 //                 list->capacity,  list->nodes_number, list->shuffle_status == SHUFFLED ? "SHUFFLED" : "LINEAR");  
 
 //     DotPrint("\n");
@@ -236,4 +233,5 @@ void CloseDot ()
 //         }
 
 //     return;
-//     }     
+//     }    
+ 

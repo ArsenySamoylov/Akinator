@@ -2,42 +2,42 @@
 
 const int CRINGE = 0xDED;
 
-enum ObjectStatus
-    {
-    UNITIALIZED = -1,
-    ACTIVE      =  0, 
-    DEAD        =  1,
-    };
-
 enum ReturnStatus
     {
     SUCCESS = 0,
     FAILURE = -1, 
     };
 
+enum ObjectStatus
+    {
+    UNITIALIZED =  1,
+    ACTIVE      =  2, 
+    DEAD        =  3,
+    };
+
 enum ArgumentsErrors
     {
-    NO_ARGUMENTS                = 1,
-    WRONG_ARGUMENT              = 3, 
-    WROMG_NUMBER_OF_ARGUMENTS   = 4,
+    NO_ARGUMENTS                = 4,
+    WRONG_ARGUMENT              = 5,  
+    WROMG_NUMBER_OF_ARGUMENTS   = 6,
     };
 
 enum FILEerrors
     {
-    ERROR_OPENING_FILE = 5,
-    ERROR_READING_FILE = 6,
+    ERROR_OPENING_FILE = 7,
+    ERROR_READING_FILE = 8,
     };
 
 enum DynamicMemoryErrors
     {    
-    BAD_CALLOC             = 7,
-    BAD_REALLOC            = 8,
+    BAD_CALLOC         = 9,
+    BAD_REALLOC        = 10,
     };
 
 enum CommonErrors
     {
-    NULL_PTR               = 9,
-    NULL_STRUCTURE_MEMBER  = 10,
+    NULL_PTR               = 11,
+    NULL_STRUCTURE_MEMBER  = 12,
 
-    SYNTAX_ERROR           = 11,  
+    SYNTAX_ERROR           = 13,  
     };

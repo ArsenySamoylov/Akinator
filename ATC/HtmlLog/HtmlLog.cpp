@@ -1,14 +1,16 @@
 #include "HtmlLog.h"
 
+static FILE* HtmlLog = NULL;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void hlog (const char* format, ...)
     {
     va_list ptr;
     va_start(ptr, format);
 
-    $p(HtmlLog)
-    $s(format)
-    $$
+    // $p(HtmlLog)
+    // $s(format)
+    // $$
     vfprintf (HtmlLog, format, ptr);
 
     return;

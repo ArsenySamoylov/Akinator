@@ -1,11 +1,10 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 void  CloseHtmlLog ();
 FILE* SetHtmlLog   ();
-
-
-extern FILE* HtmlLog;
 
 void hlog (const char* format, ...);
