@@ -1,10 +1,7 @@
 #pragma once
 
-#include "CommonEnums.h"
-#include "QDiagnostic.h"
-#include "Utils.h"
-#include "EasyDebug.h"
 
+#include "ATC.h"
 #include <malloc.h>
 
 namespace tree {

@@ -2,6 +2,7 @@
 
 
 namespace data{
+void LogNode (const Node* node);
 
 int SetDataBase (DataBase* data_base, const char* path)
     {
@@ -10,7 +11,7 @@ int SetDataBase (DataBase* data_base, const char* path)
 
     const char* buffer = GetSrcFile(path);
     assertlog (buffer, ENOENT, \
-          return  MsgRet (FAILURE, "Can't find data base in path: %s\n", path)); //  MsgNoRet ("TO do: in this case create std empty data base\n") \
+          return  MsgRet (FAILURE, "Can't find data base in path: %s\n", path)); //  MsgNoRet ("TO do: in this case create std empty data base\n") 
 
 
     DataTree* data_tree = (BinaryTree*) calloc (1, sizeof(data_tree[0]));
@@ -20,18 +21,15 @@ int SetDataBase (DataBase* data_base, const char* path)
 
     BufferToTreeDataBase (data_tree, buffer);
 
-
-
     //data_base->buffer = buffer;
-
-    return SUCCESS;
+    return LogMsgRet (SUCCESS, "Data base setted succesfuly (from path: %s)", path);
     }
 
 
 int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
     {
-    CHECK_STDERR(data_tree,  return NULL_PTR);
-    CHECK_STDERR(buffer,     return NULL_PTR);
+    assertlog (data_tree, EFAULT, exit(FAILURE));
+    assertlog (buffer,    EINVAL, exit(FAILURE));
 
     // check that data_tree is empty
     if (data_tree->size)
@@ -44,7 +42,7 @@ int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
     int number_of_nodes = 0;
 
     // parsing
-    while (!buffer)
+    while (*buffer)
         {
         if (*buffer == '{')
             {
@@ -53,21 +51,22 @@ int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
 
             new_node->parent = current_node;
 
-            buffer = SkipSpaces (buffer);       // should I free new_node in case of error ??? 
+            buffer = SkipSpaces (++buffer);       // should I free new_node in case of error ??? 
+           
             if (*buffer != '"')
                 return ParsingErrorMessage (SYNTAX_ERROR, "After { (opening braket) must be \"statement\" in this brakets - \"\n", buffer);
 
             int n = 0;
 
-            int status = sscanf (buffer, "%s[^\"]%n", new_node->data, &n);
+            int status = sscanf (++buffer, "%[^\"]%n", new_node->data, &n);
 
             if (!status)
                 return ParsingErrorMessage (SYNTAX_ERROR, "sscanf could't read this line\n", buffer);
-
+            
             if (!n)
                 return ParsingErrorMessage (SYNTAX_ERROR, "\"statement\" is empty\n", buffer);
 
-            if (*buffer != '"')
+            if (*(buffer + n) != '"')
                 return ParsingErrorMessage (SYNTAX_ERROR, "\"statement\" missing closig \" bracket \n", buffer);
 
             buffer = SkipSpaces(buffer + n + 1);
@@ -75,12 +74,14 @@ int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
             new_node->first_child  = NULL;
             new_node->second_child = NULL;
 
+            current_node = new_node;
             number_of_nodes++;
+
+            LogNode (current_node);
             }
 
         if (*buffer == '}')
             {
-            // return to prev node
             Node* prev_node = current_node->parent;
 
             // if prev_node is NULL, than current_node is root
@@ -102,27 +103,37 @@ int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
                 else
                     {
                     printf ("Error in line : ");
-                    printl (buffer, '\n');
+                    printl ( buffer, '\n');
                     printf ("Data tree node can't have more then two children\n");
 
                     return FAILURE;
                     }
                 
             // (prev_node->first_child == NULL) ? prev_node->first_child : prev_node->second_child = current_node;
+            LogNode (prev_node);
 
             current_node = prev_node;
-
+            
             buffer = SkipSpaces(++buffer);
+            }
+        
+        if (*buffer != '}' && *buffer != '{')
+            {
+            printf ("Unknown character %c\n In line: ", *buffer);
+            printl ( buffer, '\n');
+
+            return SYNTAX_ERROR; 
             }
         }
     
     // setting everything after parsing
 
     // check that current_node is root
-    $p(current_node)
-    $$
-    if (!current_node->parent)
-        return MsgRet (FAILURE, "Erro occurred, current_node must have NULL parent\n");
+    log ("ROOT::::::::::::::::::\n");
+    LogNode (current_node);
+
+    if (current_node->parent)
+        return LogMsgRet (FAILURE, "Erro occurred, current_node must have NULL parent\n");
 
     data_tree->root = current_node;
     data_tree->size = number_of_nodes;
@@ -139,4 +150,13 @@ int ParsingErrorMessage (int return_value, const char* message, const char* buff
 
     return return_value;
     }
+
+
+void LogNode (const Node* node)
+    {
+    log ("\nparent: %p\nData: (%s)\nAddress: %p\n\tFChild: %p \t Schild: %p\n\n\n", node->parent,
+                node->data, node, node->first_child, node->second_child);
+    }
 }
+
+

@@ -1,9 +1,8 @@
 #pragma once
 
+#include "ATC.h"
+
 #include "BinaryTree.h"
-#include "my_buffer.h"
-#include "SomeStuff.h"
-#include "stdlog.h"
 
 using namespace tree;
 typedef BinaryTree DataTree;

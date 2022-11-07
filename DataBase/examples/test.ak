@@ -5,9 +5,10 @@
             { "R"}
             { "PETROV"}   
         }
-    }
-    { "SIng"
-        { "Pugacheva" }
-        { "DED" }
+    
+        { "SIng"
+            { "Pugacheva" }
+            { "DED" }
+        }
     }
 }

@@ -21,7 +21,7 @@ int printl (const char *line, char terminator)
     {
     int flag_error = EOF;
 
-    while( *line != '\0' || *line != terminator)
+    while( *line != '\0' && *line != terminator)
         flag_error = putchar(*(line++));
 
     flag_error = putchar('\n');

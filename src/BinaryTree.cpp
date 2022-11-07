@@ -22,7 +22,7 @@ int Ctor (BinaryTree* tree)
     tree->size   = 0;
     tree->status = ACTIVE;
 
-    return SUCCESS;
+    return LogMsgRet (SUCCESS, "Tree succesfully initialized");
     }
 
 int Dtor (BinaryTree* tree)

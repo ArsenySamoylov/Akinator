@@ -19,11 +19,11 @@ CFLAGS  := -g   -D _DEBUG  -std=c++20 		-Wall  -Wc++14-compat  				-Wextra  				
 							   		 					
 
 SANITIZERS := #-fsanitize=address,leak #,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
-LFLAGS 	   := -lpthread 
-			 #-lsfml-window -lsfml-system -lsfml-graphics -lncurses -lsfml-audio #-lasan
+LFLAGS 	   := -lpthread  #-lasan
+			  # -lsfml-window -lsfml-system -lsfml-graphics -lncurses -lsfml-audio 
 
-SRCDIR := src     ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
-INCDIR := headers ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
+SRCDIR := src     ./ATC ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
+INCDIR := headers ./ATC ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
 
 OBJDIR := build
 DEPDIR := dependences
@@ -42,10 +42,10 @@ $(NAME):  dependences objects $(OBJECTS) cleanDependences
 
 ############################################################################
 clean:
-	@rm -rf $(OBJECTS) $(DEPENDENCES) $(DEPDIR) $(NAME) build/*.ii build/*.s #$(shell ls build/*.ii -t | head -1) $(shell ls build/*.s -t | head -1)
+	@rm -rf $(OBJECTS) $(DEPENDENCES) $(DEPDIR) $(NAME)  #$(shell ls build/*.ii -t | head -1) $(shell ls build/*.s -t | head -1)
 
 cleanLog:
-	@rm -rd Logs/
+	@rm -rd Logs/*.txt
 
 openLog:
 	@xdg-open $(shell ls Logs/*.html -t | head -1)

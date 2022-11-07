@@ -183,7 +183,7 @@ char* SkipSpaces(const char* s)
         return NULL;
     
     int n = 0;
-    sscanf(s,"%*[ \t]%n", &n);
+    sscanf(s,"%*[ \t\n\v]%n", &n);
 
     return (char*)(s + n);
     }

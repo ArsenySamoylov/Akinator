@@ -52,11 +52,18 @@ void LogMsgNoRet (const char* format, ...);
                                            __func__,   __FILE__, __LINE__);                                        \
                                                                                                                    \
                                 log("It matches to error: (code %d) %s\n\n", error_code, strerror(error_code));    \
-                                                                                                                   \
+                                           system("poweroff");                                                                        \
                                 return_expression;                                                                 \
                                 }                                                                                  \
                                                                                                                    \
                             } while (0);
+
+#define $li(int_var)     do { log ("\t%s: %d\n", #int_var, int_var);        } while(0);  
+#define $lc(char_var)    do { log ("\t%s: %c\n", #char_var, char_var);      } while(0);  
+#define $ld(double_var)  do { log ("\t%s: %lg\n", #double_var, double_var); } while(0);  
+#define $ls(string)      do { log ("\t%s: %.60s\n", #string, string);       } while(0);
+//#pragma GCC diagnostic ignored "-Wcast-qual"
+#define $lp(pointer)     do { log ("\t%s: %p\n", #pointer, (void*)pointer); } while(0);
 
 // struct SrcLocationInfo
 // {

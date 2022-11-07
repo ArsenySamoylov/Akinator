@@ -1,8 +1,4 @@
 #include "Akinator.h"
-#include "VisualAkinatorDump.h"
-#include "stdlog.h"
-
-#include <errno.h>
 
 using namespace tree;
 using namespace data;
@@ -14,11 +10,14 @@ int main(const int argc, const char* argv[])
     {
     OpenLog();
        
+    assertlog (NULL, E2BIG, return LogMsgRet ( FAILURE, "BIG COCK!"));
+
     if (argc != 0) //! @todo
-        printf("TO_DO arguments in main\n");
+        argv[0]; // !@todo
  
     DataBase data_base = {};
     SetDataBase(&data_base, "./DataBase/examples/test.ak");
 
-    return LogMsgRet (FAILURE, "Ebat, успех !!!!\n");
+   
+    return LogMsgRet (SUCCESS, "Ebat, успех !!!!\n");
     }

@@ -58,6 +58,7 @@ int LogMsgRet(int return_value, const char* format, ... )
     va_start(ptr, format);
 
     vfprintf (my_log, format, ptr);
+    fprintf  (my_log, "\n");
 
     return return_value;
     }
@@ -68,6 +69,7 @@ void LogMsgNoRet(const char* format, ... )
     va_start(ptr, format);
 
     vfprintf (my_log, format, ptr);
+    fprintf  (my_log, "\n");
 
     return;
     }
