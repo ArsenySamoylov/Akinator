@@ -2,6 +2,16 @@
 
 static FILE* HtmlLog = NULL;
 
+int AddImage (const char* path)
+    {
+    if (!path) return EXIT_FAILURE;
+
+    hlog("\t<img src = \"%s\"\n", path);
+    hlog("<hr>\n<hr>\n");
+    
+    return EXIT_SUCCESS;
+    }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void hlog (const char* format, ...)
     {
@@ -46,3 +56,4 @@ void CloseHtmlLog()
     fflush(HtmlLog);
     fclose(HtmlLog);
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////////

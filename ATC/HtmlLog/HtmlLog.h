@@ -8,3 +8,5 @@ void  CloseHtmlLog ();
 FILE* SetHtmlLog   ();
 
 void hlog (const char* format, ...);
+
+int AddImage (const char* path);

@@ -22,8 +22,11 @@ SANITIZERS := #-fsanitize=address,leak #,alignment,bool,bounds,enum,float-cast-o
 LFLAGS 	   := -lpthread  #-lasan
 			  # -lsfml-window -lsfml-system -lsfml-graphics -lncurses -lsfml-audio 
 
-SRCDIR := src     ./ATC ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
-INCDIR := headers ./ATC ./ATC/Buffer ./ATC/GraphVis ./ATC/HtmlLog ./ATC/RandomStuff ./ATC/StdLog ./ATC/VisualDump
+SRCDIR := src     ./ATC 
+SRCDIR := $(shell find $(SRCDIR) -type d)
+
+INCDIR := headers ./ATC 
+INCDIR := $(shell find $(INCDIR) -type d)
 
 OBJDIR := build
 DEPDIR := dependences

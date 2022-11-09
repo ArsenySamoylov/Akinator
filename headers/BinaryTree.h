@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "ATC.h"
+#include "ArsLib.h"
 #include <malloc.h>
 
 namespace tree {
@@ -31,4 +31,5 @@ int Dtor (BinaryTree* tree);
 
 int Add (Node* node);
 
-} 
+}
+
