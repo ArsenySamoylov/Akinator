@@ -36,7 +36,6 @@ char* GetSrcFile (const char *file_direction)
     }
 
 //! @note This functions changes all '\n' to '\0' while dividing buffer 
-//! @note AND ALO CHANGES ';' TO '\0'
 //! If you want to split buffer without changing '\n', then use SplitBufferIntoLines
 const char** DivideBufferIntoLines (char* buffer, size_t number_of_lines)
     {
@@ -190,7 +189,7 @@ char* SkipSpaces(const char* s)
 
 void ShowLine(const char* line)
     {
-    printf("Line is (%s) ", line);
+    //printf("Line is (%s) ", line);
    
     while(*line != '\0')
         {
@@ -217,27 +216,24 @@ void ShowLine(const char* line)
     printf("\\0\n");
     }
 
-void TotalShow(const char* line)
+int stricmp (const char *s1, const char *s2 )
     {
     int i = 0;
-    while( i < 100)
-        {
-        // if (*line == ' ')
-        //     putchar('_');
-        // else
-        // if (*line == '\n')
-        //     printf("\\n");
-        // else
-        // if (*line == '\t')
-        //     printf("\\t");
-        // else
-            putchar( *line);
 
-        if (i % 30 == 0)
-            putchar('\n');
-         i++;   
-        line++;
-        }
-    
-    printf("\\0");
+    for( ; s1[i] && s2[i] ; i++)
+        if ((tolower(s1[i]) != tolower(s2[i])))
+            return s1[i] - s2[i];   
+        
+    return (s1[i] - s2[i]);
+    }
+
+int strnicmp (const char *s1, const char *s2, int number_of_ch)
+    {
+    int i = 0;
+
+    for( ; s1[i] && s2[i] && number_of_ch; i++, number_of_ch--)
+        if ((tolower(s1[i]) != tolower(s2[i])))
+            return s1[i] - s2[i];   
+        
+    return (s1[i] - s2[i]);
     }

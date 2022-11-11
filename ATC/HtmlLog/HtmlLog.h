@@ -5,7 +5,7 @@
 #include <stdarg.h>
 
 void  CloseHtmlLog ();
-FILE* SetHtmlLog   ();
+FILE* OpenHtmlLog   ();
 
 void hlog (const char* format, ...);
 

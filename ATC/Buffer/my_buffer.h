@@ -10,20 +10,20 @@
 char*  GetSrcFile (const char *file_direction);
 
 //! @note This functions changes all '\n' to '\0' while dividing buffer 
-//! @note AND ALO CHANGES ';' TO '\0'
 //! If you want to split buffer without changing '\n', then use SplitBufferIntoLines
-const char** DivideBufferIntoLines (char* buffer, size_t number_of_lines);
-const char** SplitBufferIntoLines (const char* buffer, size_t number_of_lines);
+const char** DivideBufferIntoLines (      char* buffer, size_t number_of_lines);
+const char** SplitBufferIntoLines  (const char* buffer, size_t number_of_lines);
 
-char*  SkipSpaces           (const char* s);
+char*  SkipSpaces (const char* s);
 
-size_t CountLines           (const char* text,   char end_of_line);
+size_t CountLines (const char* text,   char end_of_line);
 
-void   RemoveComments       (char* buffer, char terminator);
-void   RemoveComments       (char* buffer, unsigned size,  char terminator);
+void   RemoveComments (char* buffer, char terminator);
+void   RemoveComments (char* buffer, unsigned size,  char terminator);
 
 void ShowLine(const char* line);
-void TotalShow(const char* line);
 
+int stricmp  (const char *s1, const char *s2);
+int strnicmp (const char *s1, const char *s2, int number_of_ch);
 
 #endif

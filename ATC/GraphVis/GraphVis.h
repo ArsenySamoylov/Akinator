@@ -1,25 +1,21 @@
 #pragma once
 
-#include "ArsLib.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "Config.h"
+#include "GVConfig.h"
 
 #include "stdlog.h"
 #include "BinaryTree.h"
 
-
-using tree::BinaryTree;
-using tree::Node;    
-
 FILE* OpenDotFile  (const char* path);
 void  CloseDotFile ();
 
-void DotTreeBranch (tree::Node* node);
-void PrintNode     (tree::Node* node);
+const char* MakeImg (const char* img_name, const BinaryTree* data_tree);
+
+void DotTreeBranch (Node* node);
+void PrintNode     (Node* node);
 
 // mb ask programmer to write his own functions to include it here ????
 

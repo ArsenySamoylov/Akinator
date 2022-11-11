@@ -1,4 +1,5 @@
 #include "GraphVis.h"
+#include <assert.h>
 
 static FILE* Dot = NULL; 
 
@@ -17,9 +18,10 @@ const char* MakeImg (const char* img_name, const BinaryTree* data_tree)
     SetDot ();
 
     // THIS COULD BE THE PLACE FOR YOUR FUNCTION
+    
     DotTreeBranch (data_tree->root);
     // FOR EXample like this ^
-    //                       |
+
     SetEndDot ();
 
     static char full_img_name [IMAGE_NAME_LENGTH + 16] = {}; // why static ???? to return its address dumbass
@@ -27,13 +29,13 @@ const char* MakeImg (const char* img_name, const BinaryTree* data_tree)
                                                    PATH_FOR_IMG, img_name, EXTENSION);
    
     char      system_command [SYSTEM_COMMAND_LENGTH + 16] = {};
-    snprintf (system_command, SYSTEM_COMMAND_LENGTH, "dot -T png -o %s %s", img_name, dot_file);
+    snprintf (system_command, SYSTEM_COMMAND_LENGTH, "dot -T %s -o %s %s", EXTENSION, full_img_name, dot_file);
     //$s(system_command)
 
     system   (system_command);
     
     CloseDotFile ();
-    return img_name;
+    return full_img_name;
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +58,6 @@ void SetEndDot ()
     set_func_name;
 
     DotPrint("\n}"); 
-
     fflush(Dot);
 
     return;   
@@ -95,7 +96,7 @@ void DotTreeBranch (Node* node)
     
     if (node->first_child)
         {
-        PrintNode (node->firs_child);
+        PrintNode (node->first_child);
 
         DotPrint ("\t\tnode_%p -> node_%p [label = \"Yes\", color = Green]\n", node, node->first_child);
 
@@ -118,8 +119,8 @@ void DotTreeBranch (Node* node)
 void PrintNode (Node* node)
     {
     assertlog (node, EFAULT, abort());
-
-    DotPrint ("\t\tnode_%p [shape = Mrecord label =  \"%s\"\n", node->data);
+    
+    DotPrint ("\t\tnode_%p [shape = Mrecord label =  \"%s\"]\n", node, node->data);
 
     return;
     }    

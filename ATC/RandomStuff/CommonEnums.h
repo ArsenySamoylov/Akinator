@@ -10,7 +10,7 @@ enum ReturnStatus
 
 enum ObjectStatus
     {
-    UNITIALIZED =  1,
+    UNITIALIZED =  0,
     ACTIVE      =  2, 
     DEAD        =  3,
     };

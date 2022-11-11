@@ -49,6 +49,7 @@ void CloseLog()
     fclose(my_log);    
     my_log = NULL;
 
+    printf ("Log closed\n");
     return;
     }
 

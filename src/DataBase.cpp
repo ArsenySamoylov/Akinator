@@ -1,8 +1,15 @@
 #include "DataBase.h"
 
+#include "stdlog.h"
 
-namespace data{
-void LogNode (const Node* node);
+#include <errno.h>
+#include "CommonEnums.h"
+#include "my_buffer.h"
+#include "Utils.h" 
+#include "QDiagnostic.h"
+#include "SomeStuff.h"
+
+static void LogNode (const Node* node);
 
 int SetDataBase (DataBase* data_base, const char* path)
     {
@@ -14,19 +21,21 @@ int SetDataBase (DataBase* data_base, const char* path)
           return  MsgRet (FAILURE, "Can't find data base in path: %s\n", path)); //  MsgNoRet ("TO do: in this case create std empty data base\n") 
 
 
-    DataTree* data_tree = (BinaryTree*) calloc (1, sizeof(data_tree[0]));
+    BinaryTree* data_tree = (BinaryTree*) calloc (1, sizeof(data_tree[0]));
     assertlog (data_tree, ENOMEM, return FAILURE);
 
     Ctor(data_tree);
 
     BufferToTreeDataBase (data_tree, buffer);
 
-    //data_base->buffer = buffer;
-    return LogMsgRet (SUCCESS, "Data base setted succesfuly (from path: %s)", path);
+    data_base->buffer    = buffer;
+    data_base->data_tree = data_tree;
+
+    return LogMsgRet (SUCCESS, "Data base setted succesfuly (from path: %s)\n\n", path);
     }
 
 
-int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
+int BufferToTreeDataBase (BinaryTree* data_tree, const char* buffer)
     {
     assertlog (data_tree, EFAULT, exit(FAILURE));
     assertlog (buffer,    EINVAL, exit(FAILURE));
@@ -129,8 +138,9 @@ int BufferToTreeDataBase (DataTree* data_tree, const char* buffer)
     // setting everything after parsing
 
     // check that current_node is root
-    log ("ROOT::::::::::::::::::\n");
+    log ("\nROOT:::::::::::::::::::::::::::::\n");
     LogNode (current_node);
+    log (  ":::::::::::::::::::::::::::::::::\n\n");
 
     if (current_node->parent)
         return LogMsgRet (FAILURE, "Erro occurred, current_node must have NULL parent\n");
@@ -152,11 +162,8 @@ int ParsingErrorMessage (int return_value, const char* message, const char* buff
     }
 
 
-void LogNode (const Node* node)
+static void LogNode (const Node* node)
     {
-    log ("\nparent: %p\nData: (%s)\nAddress: %p\n\tFChild: %p \t Schild: %p\n\n\n", node->parent,
+    log ("\nparent: %p\nData: (%s)\nAddress: %p\n\tFChild: %p \t Schild: %p\n", node->parent,
                 node->data, node, node->first_child, node->second_child);
-    }
-}
-
-
+}                                                                       
