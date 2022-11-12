@@ -1,13 +1,6 @@
 #include "DataBase.h"
 
-#include "stdlog.h"
-
-#include <errno.h>
-#include "CommonEnums.h"
-#include "my_buffer.h"
-#include "Utils.h" 
-#include "QDiagnostic.h"
-#include "SomeStuff.h"
+#include "ArsLib.h"
 
 static void LogNode (const Node* node);
 

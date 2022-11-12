@@ -39,5 +39,6 @@ enum CommonErrors
     NULL_PTR               = 11,
     NULL_STRUCTURE_MEMBER  = 12,
 
-    SYNTAX_ERROR           = 13,  
+    SYNTAX_ERROR           = 13,
+    LOX                    = 0xDED,  
     };

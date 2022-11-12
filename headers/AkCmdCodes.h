@@ -11,4 +11,9 @@ enum CommandsCodes
     NOT_A_COMMAND,
     };
 
-
+enum YesOrNoEnum
+    {
+    YES = 0,
+    NO  = 1, 
+    XZ  = 3,    
+    };
