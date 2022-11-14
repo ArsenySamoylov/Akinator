@@ -25,5 +25,6 @@ void ShowLine(const char* line);
 
 int stricmp  (const char *s1, const char *s2);
 int strnicmp (const char *s1, const char *s2, int number_of_ch);
+int strnicmprus (const char *s1, const char *s2, int number_of_ch);
 
 #endif

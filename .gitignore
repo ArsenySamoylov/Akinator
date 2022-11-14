@@ -2,6 +2,7 @@
 *.o
 *.ii
 *.s
+*.d
 .vscode/
 *.json
 *.html

@@ -1,5 +1,6 @@
 #include "AkUtils.h"
 
+#include "string.h"
 #include "ArsLib.h"
 
 void VisualDump (DataBase* data_base)
@@ -17,11 +18,17 @@ int IsAnswer (const char* answer, int ans_size)
     assert(answer);
 
     #define CMD_DEF(cmd, num, cmd_name, code)              \
-            if (!strnicmp (answer, cmd_name, ans_size))    \
+            if (!strnicmprus (answer, cmd_name, ans_size))    \
                 return num;     
     
     #include "Commands.h"
     #undef CMD_DEF
+
+    if (!strnicmprus (answer, "Да", ans_size))  
+        return YES;     
+
+    if (!strnicmprus (answer, "Нет", ans_size))  
+        return NO;   
 
     return NOT_A_COMMAND;
     }
@@ -59,16 +66,32 @@ int GetAnswer ()
     int offset   = 0;
     int ans_size = 0;
 
-    scanf ("%n%s%n", &offset, answer, ans_size);
+    scanf ("%n%s%n", &offset, answer, &ans_size);
     log ("User entered: (%s)\n", answer);
 
     // clearing buffer
     while(getchar() != '\n');
 
-    int ret_val = strnicmp (answer, ans_size - offset - 1);
+    int ret_val = IsAnswer (answer, ans_size - offset - 1);
+    log ("Akinator cmd: %d\n\n", ret_val);
 
     if (ret_val == NOT_A_COMMAND)
-        printf ("Durak, (%s) это не ответ да или нет !!!! давай заново\n", answer);
+        printf ("Durak, (%s) это не команда\n", answer);
     
     return ret_val; 
+    }
+
+int AddToBase (Node* node, const char* difference, const char* new_ans)
+    {
+    assert(node); assert (difference); assert (new_ans);
+
+    if (AddChildren (node) != SUCCESS)
+        return FAILURE;
+
+    strcpy (node->first_child ->data, new_ans);
+    strcpy (node->second_child->data, node->data);
+    
+    strcpy (node->data, difference);
+
+    return SUCCESS;
     }

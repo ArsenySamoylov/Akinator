@@ -5,7 +5,7 @@ CMD_DEF (QUIT,      0, "Закончить",
 
 CMD_DEF (GUESS,     1, "Гадать", 
                     {
-                    Guess (data_base->root);
+                    Guess ((data_base.data_tree)->root);
                     })
 
 CMD_DEF (SEARCH,    2, "Поиск",

@@ -11,4 +11,7 @@ int  IsYesOrNo (const char* text  , int text_size);
 void PrintCmd  ();
 int  GetAnswer ();
 
+int AddToBase (Node* node, const char* difference, const char* new_ans);
+
 void VisualDump (DataBase* data_base);
+

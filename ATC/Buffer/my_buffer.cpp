@@ -237,3 +237,18 @@ int strnicmp (const char *s1, const char *s2, int number_of_ch)
         
     return (s1[i] - s2[i]);
     }
+
+int strnicmprus (const char *s1, const char *s2, int number_of_ch)
+    {
+    int i = 0;
+
+    #include "EasyDebug.h"
+    $i(s1[i] - s2[i])    
+    $s(s1)
+    $s(s2)
+    for( ; s1[i] && s2[i] && number_of_ch; i++, number_of_ch--)
+        if (s1[i] != s2[i] && abs(s1[i] - s2[i]) != 'а' - 'А') 
+            return s1[i] - s2[i];   
+        
+    return (s1[i] - s2[i]);
+    }

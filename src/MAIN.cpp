@@ -1,6 +1,7 @@
 #include "Akinator.h"
 
 #include "DataBase.h"
+#include "AkGeneralFunctions.h"
 #include "AkUtils.h"
 
 #include "ArsLib.h"
@@ -51,7 +52,7 @@ int main()
 
             default:
                 printf ("Lox\n");
-                printf ("I don't know command: %s\n", answer);
+                printf ("I don't know this command\n");
 
                 break;
                 }
@@ -60,7 +61,7 @@ int main()
     return LogMsgRet (SUCCESS, "Ebat, успех !!!!\n");
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const char GREETING_TEXT [] = "Привет молодой шалун\n"
+const char GREETING_TEXT [] = "Привет молодой \n"
                          "Дай угадаю: ты хочешь поиграть? \n"
                          "Ну что же, разминай свои конечности и выбирай режим:\n\n";
 

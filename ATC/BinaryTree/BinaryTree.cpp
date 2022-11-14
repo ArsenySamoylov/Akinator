@@ -51,7 +51,7 @@ int Dtor (BinaryTree* tree)
     return SUCCESS;
     }
 
-int Add (Node* node)
+int AddChildren (Node* node)
     {
     CHECK_STDERR(node, return NULL_PTR);
 

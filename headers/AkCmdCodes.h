@@ -8,12 +8,17 @@ enum CommandsCodes
     #include "Commands.h"
 
     #undef CMD_DEF
+
+    YES,
+    NO,
+    XZ,
+
     NOT_A_COMMAND,
     };
 
-enum YesOrNoEnum
-    {
-    YES = 0,
-    NO  = 1, 
-    XZ  = 3,    
-    };
+// enum YesOrNoEnum
+//     {
+//     YES = 0,
+//     NO  = 1, 
+//     XZ  = 3,    
+//     };

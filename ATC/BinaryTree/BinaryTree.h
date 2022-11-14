@@ -23,4 +23,4 @@ struct BinaryTree
 int Ctor (BinaryTree* tree);
 int Dtor (BinaryTree* tree);
 
-int Add (Node* node);
+int AddChildren (Node* node);
