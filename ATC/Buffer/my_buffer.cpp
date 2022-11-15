@@ -238,17 +238,46 @@ int strnicmp (const char *s1, const char *s2, int number_of_ch)
     return (s1[i] - s2[i]);
     }
 
+#pragma GCC diagnostic ignored "-Wmultichar"
 int strnicmprus (const char *s1, const char *s2, int number_of_ch)
     {
     int i = 0;
 
-    #include "EasyDebug.h"
-    $i(s1[i] - s2[i])    
-    $s(s1)
-    $s(s2)
+    // #include "EasyDebug.h"
+    // $i(s1[1] - s2[1])  
+    // //$i('а'-'А')
+    // $i(s1[1])
+    // $i(s2[1])
+    // printf("\n");  
+    
     for( ; s1[i] && s2[i] && number_of_ch; i++, number_of_ch--)
-        if (s1[i] != s2[i] && abs(s1[i] - s2[i]) != 'а' - 'А') 
+        if (s1[i] != s2[i] && abs(s1[i] - s2[i]) != 32) // change to 'а' - 'А' 
             return s1[i] - s2[i];   
-        
-    return (s1[i] - s2[i]);
+    //$
+    if (abs (s1[i] - s2[i]) == 32)
+        return 0;
+
+    return s1[i] - s2[i]; // cause they don't cast to lower caase hence differrence ain't 0
+    }
+
+void ClearBuffer ()
+    {
+    while (getchar() != '\n')
+        continue;
+
+    return;  
+    }
+
+void fsetoffset(FILE* file, int offset)
+    {
+    fprintf(file, "%*s", offset * 2 , "");
+
+    return;
+    }
+
+void fsetoffset(int offset)
+    {
+    printf("%*s", offset * 2, "");
+
+    return;
     }

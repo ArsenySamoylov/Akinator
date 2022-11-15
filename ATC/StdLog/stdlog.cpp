@@ -38,9 +38,10 @@ void log (const char* format, ...)
 
     return;
     }
-void CloseLog()
+    
+void CloseLog() 
     {
-    long NewYorkTime = time (NULL);
+    time_t NewYorkTime = time(NULL);
 
     log("*********************************************************************\n");
     log("\t\tLog Successfuly ended, on %s", ctime(&NewYorkTime));

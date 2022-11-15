@@ -13,7 +13,7 @@
 #define assert(condition)   do                          \
                             {                           \
                             if (!(condition))           \
-                                printf ("%s: Dyrachok, (%s) - is wrong condition (in line %d)\n", __func__, #condition, __LINE__); \
+                                printf ("\033[91mASSERT\033[0m %s: Dyrachok, (%s) - is wrong condition (in line %d)\n", __func__, #condition, __LINE__); \
                             } while(0);
 
 #define $                                                                                       \

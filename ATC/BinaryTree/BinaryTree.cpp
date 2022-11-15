@@ -57,6 +57,7 @@ int AddChildren (Node* node)
 
     if (node->first_child)
         return MsgRet(FAILURE, "Node already has first child\n");
+
     if (node->second_child)
         return MsgRet(FAILURE, "Node already has second child\n");
 
@@ -66,17 +67,16 @@ int AddChildren (Node* node)
     Node* second_child = (Node*) calloc (1, sizeof(Node));
     CHECK_STDERR(second_child, return BAD_CALLOC);
 
-    //first_child->data         = 0;
-    //first_child->data         = {};
     first_child->parent       = node;
     first_child->first_child  = NULL;
     first_child->second_child = NULL;
 
-    //second_child->data         = 0;
-    //second_child->data         = {};
     second_child->parent       = node;
     second_child->first_child  = NULL;
     second_child->second_child = NULL;
+
+    node->first_child  = first_child;
+    node->second_child = second_child;
 
     return SUCCESS;
     }

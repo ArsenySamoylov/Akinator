@@ -2,39 +2,44 @@
 
 #include "ArsLib.h"
 #include "AkUtils.h"
+#include "LinuxColors.h"
 
-int Guess (Node* node)
+int Guess (Node* node) 
     {
     assert (node);
 
-    if (!node->first_child && !node->second_child)
-        return GuessResult (node);
+    while (node->first_child || node->second_child)
+        {  
+        printf ("%s?\n", node->data);
+        printf ("Да или Нет ????\n");
 
-    printf ("%s?\n", node->data);
-    printf ("Да или Нет ????\n");
+        int YesOrNo = GetAnswer ();
+        
+        if (YesOrNo == YES)
+            {
+            node = node->first_child;
 
-    int YesOrNo = GetAnswer ();
-    
-    if (YesOrNo == YES)
-        {
-        Guess (node->first_child);
+            continue;
+            }
+
+        if (YesOrNo == NO)
+            {
+            node = node->second_child;
+
+            continue;
+            }
+
+        if (YesOrNo == QUIT)
+            {
+            printf ("Я больше не буду гадать\n");
+
+            return QUIT; 
+            }
+
+        printf ("Durak, это не ответ Да или Нет !!!! давай заново\n");
         }
-    
-    if (YesOrNo == NO)
-        {
-        Guess (node->second_child);
-        }
 
-    if (YesOrNo == QUIT)
-        {
-        printf ("Я больше не буду гадать\n");
-
-        return QUIT; 
-        }
-
-    printf ("Durak, это не ответ Да или Нет !!!! давай заново\n");
-    
-    return Guess (node);
+    return GuessResult (node);
     }
 
 int GuessResult (Node* node)
@@ -47,7 +52,7 @@ int GuessResult (Node* node)
 
     if (result == YES)
         {
-        printf ("Я же говорил, что угадаю !\n");
+        printf ("Я же говорил, что угадаю !\n\n");
 
         log ("Akinator guessed (%s)\n", node->data);
         return YES;
@@ -59,13 +64,14 @@ int GuessResult (Node* node)
 
         char answer[ANSWER_LNGT] = "";
         scanf ("%s", answer);
+        ClearBuffer ();
 
-        printf ("Чем же %s отличается от %s?\n", answer, node->data);
+        printf ("Чем же " redcolor "%s\033[0m отличается от \033[92m%s\033[0m?\n", answer, node->data);
 
         char differrence[ANSWER_LNGT] = "";
-        scanf ("%s", differrence);
-
-        printf ("Хотите добавить %s в базу ?\n", answer);
+        scanf ("%[^\n]", differrence);
+             
+        printf ("Хотите добавить \033[91m%s\033[0m в базу ?\n", answer);
 
         result = GetAnswer ();
 

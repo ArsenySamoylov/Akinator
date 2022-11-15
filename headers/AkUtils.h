@@ -3,7 +3,7 @@
 #include "AkCmdCodes.h"
 #include "DataBase.h"
 
-const int  ANSWER_LNGT      = 10;
+const int  ANSWER_LNGT      = 1024;
 
 int  IsAnswer  (const char* answer, int ans_size);
 int  IsYesOrNo (const char* text  , int text_size);

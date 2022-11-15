@@ -27,4 +27,8 @@ int stricmp  (const char *s1, const char *s2);
 int strnicmp (const char *s1, const char *s2, int number_of_ch);
 int strnicmprus (const char *s1, const char *s2, int number_of_ch);
 
+void ClearBuffer ();
+
+void fsetoffset (FILE* file, int offset);
+void fsetoffset (int offset);
 #endif

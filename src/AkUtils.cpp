@@ -88,6 +88,8 @@ int AddToBase (Node* node, const char* difference, const char* new_ans)
     if (AddChildren (node) != SUCCESS)
         return FAILURE;
 
+    $p(node->first_child);
+
     strcpy (node->first_child ->data, new_ans);
     strcpy (node->second_child->data, node->data);
     
